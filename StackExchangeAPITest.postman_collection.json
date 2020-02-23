@@ -1,0 +1,542 @@
+{
+	"info": {
+		"_postman_id": "7af855f5-27a0-41c0-93dd-da6cd864eb73",
+		"name": "StackExchangeAPITest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "POST create/add a question",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a418714e-c66f-40ba-ad3d-378469f117b2",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+									"});",
+									"var jsonObject = xml2Json(responseBody);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8f1ae88f-e4e2-4eb6-9bc7-e8e114b39963",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"tags\": [\r\n        \"Test\",\r\n        \"POST\",\r\n        \"question\"\r\n      ],\r\n      \"owner\": {\r\n        \"user_id\": 11755\r\n      },\r\n      \r\n      \"title\": \"expose gatsby graphql endpoint publicly in production\",\r\n      \"body\": \"Postman will create a request with a POST method automatically.\"\r\n     \r\n    }"
+						},
+						"url": {
+							"raw": "{{url}}/2.2/questions/add",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"2.2",
+								"questions",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "de83035c-825b-4e88-bc39-3afa86f899df",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c4646931-b858-4857-9c33-c1feeef14c96",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "GET comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31bbb6d0-8e79-4958-beeb-87f9d2cdf3b3",
+								"exec": [
+									"",
+									"var jsonObject = xml2Json(responseBody);pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Testing that comment with comment_id = 106761177 was created by Emanuel Oliveira\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Emanuel Oliveira\");",
+									"});",
+									"",
+									"var Ajv = require('ajv'),",
+									"    ajv = new Ajv({logger: console}),",
+									"    schema = {",
+									"    \"required\": [",
+									"        \"items\",",
+									"        \"has_more\",",
+									"        \"quota_max\",",
+									"        \"quota_remaining\"",
+									"    ],",
+									"    \"properties\": {",
+									"        \"items\": {",
+									"            \"items\": {",
+									"                \"required\": [",
+									"                    \"owner\",",
+									"                    \"edited\",",
+									"                    \"score\",",
+									"                    \"creation_date\",",
+									"                    \"post_id\",",
+									"                    \"comment_id\"",
+									"                ],",
+									"                \"properties\": {",
+									"                    \"owner\": {",
+									"                        \"required\": [",
+									"                            \"reputation\",",
+									"                            \"user_id\",",
+									"                            \"user_type\",",
+									"                            \"profile_image\",",
+									"                            \"display_name\",",
+									"                            \"link\"",
+									"                        ],",
+									"                        \"properties\": {",
+									"                            \"reputation\": {",
+									"                                \"$id\": \"#/properties/items/items/properties/owner/properties/reputation\",",
+									"                                \"type\": \"integer\"",
+									"                            },",
+									"                            \"user_id\": {",
+									"                                \"$id\": \"#/properties/items/items/properties/owner/properties/user_id\",",
+									"                                \"type\": \"integer\"",
+									"                            },",
+									"                            \"user_type\": {",
+									"                                \"$id\": \"#/properties/items/items/properties/owner/properties/user_type\",",
+									"                                \"type\": \"string\"",
+									"                            },",
+									"                            \"profile_image\": {",
+									"                                \"$id\": \"#/properties/items/items/properties/owner/properties/profile_image\",",
+									"                                \"type\": \"string\"",
+									"                            },",
+									"                            \"display_name\": {",
+									"                                \"$id\": \"#/properties/items/items/properties/owner/properties/display_name\",",
+									"                                \"type\": \"string\"",
+									"                            },",
+									"                            \"link\": {",
+									"                                \"$id\": \"#/properties/items/items/properties/owner/properties/link\",",
+									"                                \"type\": \"string\"",
+									"                            }",
+									"                        },",
+									"                        \"$id\": \"#/properties/items/items/properties/owner\",",
+									"                        \"type\": \"object\"",
+									"                    },",
+									"                    \"edited\": {",
+									"                        \"$id\": \"#/properties/items/items/properties/edited\",",
+									"                        \"type\": \"boolean\"",
+									"                    },",
+									"                    \"score\": {",
+									"                        \"$id\": \"#/properties/items/items/properties/score\",",
+									"                        \"type\": \"integer\"",
+									"                    },",
+									"                    \"creation_date\": {",
+									"                        \"$id\": \"#/properties/items/items/properties/creation_date\",",
+									"                        \"type\": \"integer\"",
+									"                    },",
+									"                    \"post_id\": {",
+									"                        \"$id\": \"#/properties/items/items/properties/post_id\",",
+									"                        \"type\": \"integer\"",
+									"                    },",
+									"                    \"comment_id\": {",
+									"                        \"$id\": \"#/properties/items/items/properties/comment_id\",",
+									"                        \"type\": \"integer\"",
+									"                    }",
+									"                },",
+									"                \"$id\": \"#/properties/items/items\",",
+									"                \"type\": \"object\"",
+									"            },",
+									"            \"$id\": \"#/properties/items\",",
+									"            \"type\": \"array\"",
+									"        },",
+									"        \"has_more\": {",
+									"            \"$id\": \"#/properties/has_more\",",
+									"            \"type\": \"boolean\"",
+									"        },",
+									"        \"quota_max\": {",
+									"            \"$id\": \"#/properties/quota_max\",",
+									"            \"type\": \"integer\"",
+									"        },",
+									"        \"quota_remaining\": {",
+									"            \"$id\": \"#/properties/quota_remaining\",",
+									"            \"type\": \"integer\"",
+									"        }",
+									"    },",
+									"    \"$id\": \"http://example.org/root.json#\",",
+									"    \"type\": \"object\",",
+									"    \"definitions\": {},",
+									"    \"$schema\": \"http://json-schema.org/draft-07/schema#\"",
+									"};",
+									" ",
+									"pm.test('Schema is valid', function() {",
+									"    var data = pm.response.json();",
+									"    pm.expect(ajv.validate(schema, data)).to.be.true;",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2c3e10e8-5cd9-4664-99b6-867b8466bc2d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/2.2/comments/106761177?order=desc&sort=creation&site=stackoverflow",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"2.2",
+								"comments",
+								"106761177"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "sort",
+									"value": "creation"
+								},
+								{
+									"key": "site",
+									"value": "stackoverflow"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Json Schema validation example is added to GET section.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4a9e0e31-c3ff-41a9-a5c8-1e4301b3fff7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4b46ea6e-e6f6-4ce7-8d0d-83b39c78bed5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "PUT edit comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a418714e-c66f-40ba-ad3d-378469f117b2",
+								"exec": [
+									"var jsonObject = xml2Json(responseBody);",
+									"",
+									"pm.test(\"Successful PUT request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,204]);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8f1ae88f-e4e2-4eb6-9bc7-e8e114b39963",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"body\": {{body}}\n}\n"
+						},
+						"url": {
+							"raw": "{{url}}/2.2/comments/106761706/edit",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"2.2",
+								"comments",
+								"106761706",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "For testing PUT method, please use file:\n\"DataStackExchangeforPUT.json\"\nor\n\"DataStackExchangeforPUT.csv\". \n\nThey have the same data, just the file format is different.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bf0e1bdf-3698-4142-a13f-16996d24fbe6",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "55014440-47f3-4770-93a2-8423ab2402ca",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "PATCH",
+			"item": [
+				{
+					"name": "PATCH edit answer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c26904aa-c988-472b-9dcf-48723a1b7eec",
+								"exec": [
+									"var jsonObject = xml2Json(responseBody);",
+									"",
+									"pm.test(\"Successful PATCH request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,204]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"body\": \"The answer body is updated. Details of the answer: answer_id = 60352299)\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/2.2/answers/60352299/edit",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"2.2",
+								"answers",
+								"60352299",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "DELETE a question",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b6c247f1-bdc5-4170-adfe-f3b6c2970739",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "03e9ba4b-3142-4958-9b64-9f9ade356c5a",
+								"exec": [
+									"var jsonObject = xml2Json(responseBody);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/2.2/questions/60352081/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"2.2",
+								"questions",
+								"60352081",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4c3280ac-bdec-4df2-8d9c-9f2c6ac8c2ee",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "50072a52-44e3-4fdc-8db9-99a9d99419ed",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "3b550a16-d3fd-4944-b43c-56f2e71a7fde",
+			"key": "url",
+			"value": "https://api.stackexchange.com",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
